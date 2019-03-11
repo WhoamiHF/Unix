@@ -5,10 +5,18 @@ then
    if [ -L "$2" ]
    then
    echo "Link"
-   elif
-     [ -f "$2" ]
-    then
+   elif [ -f "$2" ];then
     echo "Regular file"
+   elif [ -d "$2" ]; then
+    echo "Directory"
+   elif [ -s "$2" ]; then
+    echo "socket"
+   elif [ -p "$2" ]; then
+    echo "pipe"
+   elif [ -c "$2" ]; then
+    echo "Character special file"
+   elif [ -b "$2" ]; then
+    echo "block device"
     else
     file "$2"
     fi
