@@ -2,7 +2,11 @@ if [ "$1" ==  "--typ" ]
 then
   if [ -e "$2" ]
   then
-    if [ -f "$2" ]
+   if [ -L "$2" ]
+   then
+   echo "Link"
+   elif
+     [ -f "$2" ]
     then
     echo "Regular file"
     else
@@ -16,4 +20,6 @@ elif [ "$1" ==  "--help" ]
    then
    echo "--typ - returns type of file or error if file does not exist."
    echo "--help - returns this help"
+else
+echo "not a correct command. Type --help"
 fi
