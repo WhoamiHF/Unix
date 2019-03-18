@@ -1,0 +1,14 @@
+1) testshift dostal pět argumentů, z čehož 3 zahodil
+   prvním a druhým shiftem. Na třetí tedy již nezbyli 3 argumenty.
+2)
+A)$# je roven počtu arbumentů
+B){#proměnná} je roven délce (ve znacích) dané proměnné.
+C)${!i} používá se pro nepřímé přesměrování. 
+Hodnota proměnné za ! je teprve použita jako argument
+D)${proměnná:-výraz} pokud hodnota proměnné není definována nebo prázdná pak je nahrazena výrazem napravo :-
+E)${proměnná:1:4} vrátí znaky proměnné bez 1-4 znaku, počítáno od jedné.
+F)${proměnná:1:4:2} vrátí první dva  znaky proměnné bez 1-4 znaku.
+F)${i/a/b} změní nejdřívější výskyt a v itém argumentu za b. ${@/a/b} to udělá pro všechny argumenty ( místo @ lze použít i $). 
+pokud je místo i # pak se provede porovnávání na začátku. % na konci.
+G)${i//a/b} nahradí všechny výskyty a za b. ( ne jen první)
+H) @ lze použít všude kde potřebujeme něco udělat pro každý argument.
