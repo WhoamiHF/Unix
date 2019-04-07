@@ -11,4 +11,4 @@ F)${proměnná:1:4:2} ořízne proměnou jedna o první čtyři znaky a posledn�
 F)${i/a/b} změní nejdřívější výskyt a v itém argumentu za b. ${@/a/b} to udělá pro všechny argumenty ( místo @ lze použít i $). 
 pokud je místo i # pak se provede porovnávání na začátku. % na konci.
 G)${i//a/b} nahradí všechny výskyty a za b. ( ne jen první)
-H) @ lze použít všude kde potřebujeme něco udělat pro každý argument.
+H) @ lze použít všude kde potřebujeme něco udělat pro každý argument. Nelze tedy v f3.
