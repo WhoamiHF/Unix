@@ -3,9 +3,9 @@ if [ "$#" == "0" ]; then
 elif [ "$1" == "-n" ]; then
     j=$2
 fi
-    cat > /tmp/mytac
-    n=$(cat /tmp/mytac | wc -l)
-    for (( i=n;i>0;i="$i"-"$j")); do
-    cat /tmp/mytac | head -n $i | tail -n $j
-    done
-    
+cat > /tmp/mytac
+n=$(cat /tmp/mytac | wc -l)
+for (( i=n;i>0;i="$i"-"$j")); do
+cat /tmp/mytac | head -n $i | tail -n $j
+done
+rm /tmp/mytac
