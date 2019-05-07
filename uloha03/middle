@@ -1,0 +1,46 @@
+if [ "$1" == "-l" ] || [ "$1" == "--lines" ]; then
+    m=${2%%-*}
+    n=${2##*-}
+    if [ "$#" == "3" ]; then
+	cat $3 > /tmp/mid
+    else
+	cat > /tmp/mid
+    fi 
+    pocet=$(wc -l < /tmp/mid)
+    if [ "$pocet" -le "$n" ]; then
+	let a=$pocet
+	let b=$pocet-$m+1
+    else
+	let b=$n-$m+1
+	let a=$n
+    fi
+elif [ "$1" == "-f" ] || [ "$1" == "--fraction" ]; then    
+    m=${2%%/*}
+    n=${2##*/}
+    p=${3%%/*}
+    q=${3##*/}
+    if [ "$#" == "4" ]; then
+	cat $4 > /tmp/mid
+    else
+	cat > /tmp/mid
+    fi
+    pocet=$(wc -l < /tmp/mid)
+    let a=$p*$pocet/$q
+    let b=$a-$m*$pocet/$n+1
+elif [ "$1" == "-p" ] || [ "$1" == "--part" ]; then
+    m=${2%%/*}
+    n=${2##*/}
+    if [ "$#" == "3" ]; then
+	cat $3 > /tmp/mid
+    else
+	cat > /tmp/mid
+    fi
+    pocet=$(wc -l < /tmp/mid)
+    let a=$m*$pocet/$n
+    let b=$pocet/$n
+fi
+
+cat /tmp/mid | head -n $a | tail -n $b
+rm /tmp/mid
+
+
