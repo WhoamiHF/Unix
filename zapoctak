@@ -1,0 +1,73 @@
+#!/bin/bash
+
+Refresh(){
+clear
+
+if [ $detailed == "0" ]
+then
+echo -e  \\e[41m "`ps -o cmd,%mem,pid| head -n 1`"\\e[0m
+ps -o cmd,%mem,pid | sed "1d; $(($Chosen+1)) {s/^/>/;s/\$/</};\
+$(($Chosen+1))! s/^/ /"
+else
+Pid=`ps -o pid | awk "NR == $Chosen +1"` 
+detail=`ps -ly $Pid`
+for i in `seq 13`
+do
+    echo $detail | tr -s ' ' |
+    cut -d" " -f$i,$(($i+13)) |
+    tr ' ' '\t'
+    echo
+done
+fi
+}
+
+trap 'Refresh ' ALRM 
+
+detailed=0
+Chosen=4
+
+./zapoctak2 1 $$ &
+
+while true
+do
+read -rsn1 Key
+
+case $Key in 
+   "w")
+   if [ $Chosen -ne 1 ]
+   then
+   Chosen=$(($Chosen-1))
+   fi
+   ;;
+   "s")
+   Chosen=$(($Chosen+1))
+   ;;
+   "k")
+   kill `ps -o pid | awk "NR==$Chosen+1"`
+   ;;
+   "d")
+   detailed=1
+   ;;
+   "q")
+   clear
+   exit
+   ;;
+   "a") 
+   detailed=0
+   ;;
+   "p")
+   kill -STOP `ps -o pid| awk "NR==$Chosen+1"`
+   ;;
+   "c")
+   kill -CONT `ps -o pid|awk "NR==$Chosen+1"`
+   ;;
+   "o")
+   read -rsn2 signal
+   if echo $signal | grep [0-9][0-9] > /dev/null; then
+   kill -$signal `ps -o pid | awk "NR == $Chosen + 1"`
+   fi
+   ;;
+   
+esac
+done
+
