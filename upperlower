@@ -1,0 +1,31 @@
+#!/bin/sh
+
+change(){
+find "$1" -r ;regex ".*/[^$new]*" - type f - exec sh -c ' file2={}" \
+oldFile=$(basename "$file"); newFile=`echo $oldFile" | tr [$old] [$new]\
+path=$(dirname "$file2") \
+if [ -f "$path"/"$newFile" ]; then \
+echo "kolize"
+else mv "{}" "$path/$newFile" 
+fi
+
+}
+
+
+if [ "$1' = '-r" ]; then
+    old="a-z"
+    new="A-Z"
+    shift
+else
+    old="A-Z"
+    new="a-z"
+fi
+
+if [ $# == 0 ]; then
+    change "./"
+fi
+
+for file in $@
+do 
+change $file
+done
