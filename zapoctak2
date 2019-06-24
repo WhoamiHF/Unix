@@ -1,0 +1,5 @@
+#!/bin/bash
+for i in `seq 100` ; do
+sleep $1
+kill -ALRM $2 2> /dev/null || exit
+done
