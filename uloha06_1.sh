@@ -1,6 +1,8 @@
-sort -o social.txt social.txt
-sort -o beverly_hills.txt beverly_hills.txt
-sort -o actor.txt actor.txt
-join -t, actor.txt beverly_hills.txt > pom
-join -t, pom social.txt
+#!/bin/sh
+
+sort -o "$1" "$1"
+sort -o "$2" "$2"
+sort -o "$3" "$3"
+join -t, "$1" "$2"  > pom
+join -t, pom "$3"
 rm pom
