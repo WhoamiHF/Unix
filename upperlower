@@ -5,22 +5,22 @@ echo "$a"
 }
 
 change(){
-find "$1"/ -regex ".*/[^$new]*" -type f -exec sh -c ' file2="{}" \
+find "$1"/ -regex ".*/[^$new]*" -type f -exec sh -c ' file2="{}"; \
 oldFile=$(basename "$file2"); \
-if [ "$t" == 1 ]\
-then\ 
+if [ t == 1 ]; then
     newFile=`echo "$oldFile" |tr [a-z] [A-Z]`\
-else\
+    else
     newFile=`echo "$oldFile" |tr [A-Z] [a-z]`\
-fi\
-path=$(dirname "$file2") \
+fi    
+
+path=$(dirname "$file2"); \
 if [ -f "$path"/"$newFile" ] \
-then \
-echo "kolize" >&2\
-else mv "{}" "$path"/"$newFile" \
-fi
-' _ {} \;
+then echo "kolize" >&2 \
+else
+mv "{}" "$path"/"$newFile"  \
+fi;'_ {} $old $new \;
 }
+
 
 if [ "$1" = "-r" ]; then
     old="a-z"
@@ -37,7 +37,7 @@ if [ "$#" == 0 ]; then
     change "./"
 fi
 
-for file
+for file in $@
 do 
 change $file
 done
