@@ -1,18 +1,24 @@
 #!/bin/sh
 
 change(){
-find "$1" -r ;regex ".*/[^$new]*" - type f - exec sh -c ' file2={}" \
-oldFile=$(basename "$file"); newFile=`echo $oldFile" | tr [$old] [$new]\
+find "$1"  -maxdepth 1 -regex ".*/[^$new]*" - type f -exec sh -c ' file2="{}" \
+oldFile=$(basename "$file2"); newFile=`echo "$oldFile" | tr [$old] [$new]`\
 path=$(dirname "$file2") \
-if [ -f "$path"/"$newFile" ]; then \
-echo "kolize"
-else mv "{}" "$path/$newFile" 
+if [ -f "$path"/"$newFile" ] ; then \
+echo "kolize" \
+else mv "{}" "$path"/"$newFile" \
 fi
+'
 
+find"$1" -maxdepth 1 ;not ;regex "^.$" -type d -print | while read -d '' -r next\
+do if [ "$next" != "$1" ]; then
+change $next
+fi
+done
 }
 
 
-if [ "$1' = '-r" ]; then
+if [ "$1" = "-r" ]; then
     old="a-z"
     new="A-Z"
     shift
@@ -21,7 +27,7 @@ else
     new="a-z"
 fi
 
-if [ $# == 0 ]; then
+if [ "$#" == 0 ]; then
     change "./"
 fi
 
