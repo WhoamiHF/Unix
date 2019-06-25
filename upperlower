@@ -1,24 +1,36 @@
 #!/bin/sh
+mnew(){
+a=`echo "$1" | tr [$old] [$new]`
+echo "$a"
+}
 
 change(){
-find "$1"  -regex ".*/[^$new]*" - type f -exec sh -c ' file2="{}" \
-oldFile=$(basename "$file2"); newFile=`echo "$oldFile" | tr [$old] [$new]`\
+find "$1"/ -regex ".*/[^$new]*" -type f -exec sh -c ' file2="{}" \
+oldFile=$(basename "$file2"); \
+if [ "$t" == 1 ]\
+then\ 
+    newFile=`echo "$oldFile" |tr [a-z] [A-Z]`\
+else\
+    newFile=`echo "$oldFile" |tr [A-Z] [a-z]`\
+fi\
 path=$(dirname "$file2") \
-if [ -f "$path"/"$newFile" ] ; then \
+if [ -f "$path"/"$newFile" ] \
+then \
 echo "kolize" >&2\
 else mv "{}" "$path"/"$newFile" \
 fi
-'
-
-
+' _ {} \;
+}
 
 if [ "$1" = "-r" ]; then
     old="a-z"
     new="A-Z"
+    t=1
     shift
 else
     old="A-Z"
     new="a-z"
+    t=0
 fi
 
 if [ "$#" == 0 ]; then
