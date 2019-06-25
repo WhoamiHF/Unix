@@ -5,12 +5,12 @@ clear
 
 if [ $detailed == "0" ]
 then
-echo -e  \\e[41m "`ps -o cmd,%mem,pid| head -n 1`"\\e[0m
-ps -o cmd,%mem,pid | sed "1d; $(($Chosen+1)) {s/^/>/;s/\$/</};\
-$(($Chosen+1))! s/^/ /"
+echo -e  \\e[41m "`ps -Ao cmd,%mem,pid,user| head -n 1`"\\e[0m
+ps -Ao cmd,%mem,pid,user | sed "1d; $(($Chosen+1)) {s/^/>/;s/\$/</};\
+$(($Chosen+1))! s/^/ /" | head -n $((40+$Chosen)) | tail -n 41
 else
-Pid=`ps -o pid | awk "NR == $Chosen +1"` 
-detail=`ps -ly $Pid`
+Pid=`ps -Ao pid | awk "NR == $Chosen +1"` 
+detail=`ps -Aly $Pid`
 for i in `seq 13`
 do
     echo $detail | tr -s ' ' |
@@ -43,7 +43,7 @@ case $Key in
    Chosen=$(($Chosen+1))
    ;;
    "k")
-   kill `ps -o pid | awk "NR==$Chosen+1"`
+   kill `ps -Ao pid | awk "NR==$Chosen+1"`
    ;;
    "d")
    detailed=1
@@ -56,15 +56,15 @@ case $Key in
    detailed=0
    ;;
    "p")
-   kill -STOP `ps -o pid| awk "NR==$Chosen+1"`
+   kill -STOP `ps -Ao pid| awk "NR==$Chosen+1"`
    ;;
    "c")
-   kill -CONT `ps -o pid|awk "NR==$Chosen+1"`
+   kill -CONT `ps -Ao pid|awk "NR==$Chosen+1"`
    ;;
    "o")
    read -rsn2 signal
    if echo $signal | grep [0-9][0-9] > /dev/null; then
-   kill -$signal `ps -o pid | awk "NR == $Chosen + 1"`
+   kill -$signal `ps -Ao pid | awk "NR == $Chosen + 1"`
    fi
    ;;
    
